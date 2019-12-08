@@ -2,6 +2,7 @@
 
  *  ITU projekt - TimeTracker 
  *  Zpracovani dat pro cile v jednotlivych kategoriich
+ *  View Model pro Targets View
  *  Autor: Adam Grunwald, xgrunw00
 
  
@@ -22,9 +23,7 @@ using System.Windows.Threading;
 
 namespace ITU_EOP
 {
-    /// <summary>
-    /// View Model pro Targets View
-    /// </summary>
+  
     public class TargetsViewModel : ViewModelBase
     {
         /// <summary>

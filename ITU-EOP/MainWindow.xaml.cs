@@ -1,4 +1,10 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿/*
+ * ITU projekt - TimeTracker
+ * Codebehind pro hlavn9 okno s funkcemi pro ovl8d8n9 kalendáře.
+ * Dominik Nejedlý, xnejed09
+ */
+
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +25,7 @@ using System.Windows.Shapes;
 namespace ITU_EOP
 {
     /// <summary>
-    /// Interakční logika pro MainWindow.xaml
+    /// Interakční logika pro MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -30,6 +36,9 @@ namespace ITU_EOP
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Při opuštění okna kalendáře, kalendář zmizí a pokud je nastaveno aktuální datum, spustí se časovač.
+        /// </summary>
         private void calendar_MouseLeave(object sender, MouseEventArgs e)
         {
             calendar.Visibility = Visibility.Hidden;
@@ -40,11 +49,17 @@ namespace ITU_EOP
             }
         }
 
+        /// <summary>
+        /// Při stisknutí tlačítka je kalendář vidět.
+        /// </summary>
         private void calendarButton_Click(object sender, RoutedEventArgs e)
         {
             calendar.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Změní datum, na datum vybrané v kalendáři a zastaví časovač.
+        /// </summary>
         private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             Messenger.Default.Send(0);

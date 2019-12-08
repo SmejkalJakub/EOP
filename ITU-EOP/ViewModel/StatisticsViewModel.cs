@@ -1,7 +1,9 @@
-Ôªø/*
+/*
  *  ITU projekt - TimeTracker 
  *  Zpracovani dat pro vzkresleni grafu
+*   ViewModel pro Statistics View vyuûÌvajÌcÌ Nugget balÌËek LiveCharts https://www.nuget.org/packages/LiveCharts/
  *  Autor: Adam Grunwald, xgrunw00
+ 
 */
  using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
@@ -18,13 +20,17 @@ using System.Threading.Tasks;
 
 namespace ITU_EOP
 {
+<<<<<<< HEAD
     /// <summary>
     /// ViewModel pro Statistics View vyu≈æ√≠vaj√≠c√≠ NuGet bal√≠ƒçek LiveCharts https://www.nuget.org/packages/LiveCharts/
     /// </summary>
+=======
+   
+>>>>>>> 3b35d24e05e8adb0d5986382f29cc7e251755704
     public class StatisticsViewModel : ViewModelBase
     {
         /// <summary>
-        /// T≈ô√≠dy pro zobrazen√≠ hodnot v grafech
+        /// T¯Ìdy pro zobrazenÌ hodnot v grafech
         /// </summary>
         public SeriesCollection appsCollection { get; set; }
 
@@ -34,7 +40,7 @@ namespace ITU_EOP
         readonly TimeSpan zeroState = new TimeSpan(0, 0, 0);
 
         /// <summary>
-        /// Seznam aplikac√≠ v z√°znamu
+        /// Seznam aplikacÌ v z·znamu
         /// </summary>
         private ObservableCollection<Application> applications;
         public ObservableCollection<Application> Applications
@@ -50,7 +56,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Seznam kategori√≠ v z√°znamu
+        /// Seznam kategoriÌ v z·znamu
         /// </summary>
         private Dictionary<string, Category> categories = new Dictionary<string, Category>();
         public Dictionary<string, Category> Categories
@@ -70,9 +76,9 @@ namespace ITU_EOP
 
             if (!categories.ContainsKey("Work") && !categories.ContainsKey("Fun") && !categories.ContainsKey("Other"))
             {
-                categories.Add("Work", new Category("Work", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Pr√°ce"));
-                categories.Add("Fun", new Category("Fun", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Z√°bava"));
-                categories.Add("Other", new Category("Other", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Ostatn√≠"));
+                categories.Add("Work", new Category("Work", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Pr·ce"));
+                categories.Add("Fun", new Category("Fun", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Z·bava"));
+                categories.Add("Other", new Category("Other", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "OstatnÌ"));
             }
 
             appsCollection = new SeriesCollection();
@@ -80,10 +86,10 @@ namespace ITU_EOP
             categoriesCollection = new SeriesCollection();
 
 
-            /// Poslouch√°n√≠ na r≈Øzn√Ωch druz√≠ch zpr√°v z jin√Ωch ViewModel≈Ø
+            /// Poslouch·nÌ na r˘zn˝ch druzÌch zpr·v z jin˝ch ViewModel˘
             Messenger.Default.Register<SimpleMessage>(this, ConsumeMessage);
 
-            /// Kop√≠rov√°n√≠ dat do funkc√≠ pro popis graf≈Ø
+            /// KopÌrov·nÌ dat do funkcÌ pro popis graf˘
             Messenger.Default.Register<ObservableCollection<Application>>(this, (apps) =>
             {
                
@@ -129,7 +135,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Funkce kter√° je vyvolan√° messengerem pro smaz√°n√≠ graf≈Ø, aby nebyly p≈ôekreslov√°ny dvakr√°t
+        /// Funkce kter· je vyvolan· messengerem pro smaz·nÌ graf˘, aby nebyly p¯ekreslov·ny dvakr·t
         /// </summary>
         /// <param name="message"></param>
         private void ConsumeMessage(SimpleMessage message)

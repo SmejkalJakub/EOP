@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * ITU projekt - TimeTracker
+ * Základní data o jednotlivých kategoriích.
+ * Dominik Nejedlý, xnejed09
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +13,7 @@ using System.Threading.Tasks;
 namespace ITU_EOP
 {
     /// <summary>
-    /// Třída uchovávající data pro Kategorii
+    /// Třída uchovávající data pro Kategorii.
     /// </summary>
     public class Category
     {
