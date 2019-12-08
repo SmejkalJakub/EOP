@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * ITU projekt - TimeTracker
+ * Základní data o jednotlivých aplikacích a vlastnosti pro ikony kaegorií.
+ * Dominik Nejedlý, xnejed09
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +14,7 @@ using System.Windows.Media;
 namespace ITU_EOP
 {
     /// <summary>
-    /// Třída uchovávající data o Aplikaci
+    /// Třída uchovávající data o Aplikaci.
     /// </summary>
     public class Application
     {
