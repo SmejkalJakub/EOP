@@ -17,11 +17,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-35,0,30">
-            <TextBlock x:Name="dateToday" Text="{Binding Today}" TextAlignment="Center" FontSize="24" Foreground="#FF615959" Width="120" VerticalAlignment="Center"/>
-        </StackPanel>
-        -->
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,30">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
