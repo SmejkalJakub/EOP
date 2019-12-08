@@ -19,11 +19,25 @@ using System.Windows.Media.Imaging;
 namespace ITU_EOP
 {
     /// <summary>
-    /// Nejrozsáhlejší třída která řídí zobrazování hlavní části programu a to je zobrazování 
+    /// Nejrozsáhlejší třída která řídí zobrazování hlavní části programu a to je zobrazování času, kategorie a seznamu aplikací
     /// </summary>
     public class ApplicationListViewModel : ViewModelBase, INotifyPropertyChanged
     {
+
+        /// <summary>
+        /// Import funkcí z WInApi pro získávání jména oken nma popředí
+        /// </summary>
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern int GetWindowTextLength(IntPtr hWnd);
+
         #region Variables
+
         bool timerState = true;
 
         bool timerStopedByCommand = false;
@@ -32,7 +46,20 @@ namespace ITU_EOP
 
         int procrastinationTimer = 1;
 
+        int wholeTime = 0;
 
+        int mode;
+
+        bool firstSend = true;
+
+        string[] discludedPrograms = { "Přepínání úloh", "Hledání", String.Empty, " ", "Uložit jako", "Nové oznámení", "Centrum akcí" };
+
+        readonly TimeSpan oneSecond = new TimeSpan(0, 0, 1);
+
+
+        /// <summary>
+        /// Ikony pro kategorie
+        /// </summary>
         BitmapImage workOn = new BitmapImage(new Uri("pack://application:,,,/Icons/workOn.png"));
         BitmapImage workOff = new BitmapImage(new Uri("pack://application:,,,/Icons/workOff.png"));
         BitmapImage funOn = new BitmapImage(new Uri("pack://application:,,,/Icons/funOn.png"));
@@ -43,40 +70,34 @@ namespace ITU_EOP
 
         DateTime selectedDate = DateTime.Today;
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr GetForegroundWindow();
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern int GetWindowTextLength(IntPtr hWnd);
-
-        string[] discludedPrograms = { "Přepínání úloh", "Hledání", String.Empty, " ", "Uložit jako", "Nové oznámení", "Centrum akcí" };
-
-        int wholeTime = 0;
-
+        /// <summary>
+        /// Časovače sloužící pro přičítání času, zpoždění při načtění nového viewModelu a ukládání záznamů
+        /// </summary>
         readonly DispatcherTimer applicationTimer = new DispatcherTimer();
         readonly DispatcherTimer statisticsTimer = new DispatcherTimer();
         readonly DispatcherTimer targetsTimer = new DispatcherTimer();
         readonly DispatcherTimer saveTimer = new DispatcherTimer();
 
+        /// Seznam známých kategorií
         Dictionary<string, string> knownCategories = new Dictionary<string, string>();
 
-        readonly TimeSpan oneSecond = new TimeSpan(0, 0, 1);
-
+        /// <summary>
+        /// Zpráva pro obnovení Application dataGridu
+        /// </summary>
         readonly SimpleMessage refreshMessage;
+
 
         FileOperator fileOp = new FileOperator();
 
         Notfications notification = new Notfications();
 
-        int mode;
 
         Dictionary<string, Category> categories = new Dictionary<string, Category>();
 
-        bool firstSend = true;
-
+        /// <summary>
+        /// Seznam spuštěných a zaznamenaných aplikací
+        /// </summary>
         private ObservableCollection<Application> applications;
         public ObservableCollection<Application> Applications
         {
@@ -96,13 +117,16 @@ namespace ITU_EOP
         public ICommand setCategory { get { return new RelayCommand<object>(setCategoryExecute); } }
         public ICommand deleteApplication { get { return new RelayCommand<object>(deleteApplicationExecute); } }
 
+        /// <summary>
+        /// Nastavení nové kategorie zvolené tlačítkem pro konkrétní aplikaci
+        /// </summary>
+        /// <param name="obj"></param>
         private void setCategoryExecute(object obj)
         {
             var parameters = (object[])obj;
             var application = (Application)parameters[1];
 
             categories[application.Category.name].timeInCategory = categories[application.Category.name].timeInCategory.Add(-(application.timeInApp));
-
 
             application.Category = categories[parameters[0].ToString()];
 
@@ -116,6 +140,11 @@ namespace ITU_EOP
 
         }
 
+        /// <summary>
+        /// Nastavení ikony aplikaci, změna ikon na řádku aplikace v DataGridu
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="name"></param>
         private void setCategoryIcon(Application application, string name)
         {
             if (name == "Work")
@@ -140,6 +169,10 @@ namespace ITU_EOP
             }
         }
 
+        /// <summary>
+        /// Smazání aplikace ze seznamu
+        /// </summary>
+        /// <param name="applicationName"></param>
         private void deleteApplicationExecute(object applicationName)
         {
             Application app = (Application)applicationName;
@@ -159,6 +192,7 @@ namespace ITU_EOP
             categories.Add("Fun", new Category("Fun", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Zábava"));
             categories.Add("Other", new Category("Other", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), "Ostatní"));
 
+            ///Zjištění přítomnosti souboru s cíly a načtění pro dnešní den
             if (File.Exists(Path.Combine(Directory.GetCurrentDirectory() + "\\targets\\" + DateTime.Today.Year + DateTime.Today.Month + DateTime.Today.Day + ".json")))
             {
                 var targets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, TimeSpan>>(File.ReadAllText(
@@ -178,6 +212,7 @@ namespace ITU_EOP
 
             setTimers();
 
+            /// Nastavení úvodní kategorie pokud nexestuje seznam kategorií jinak načtení ze souboru
             if (!fileOp.checkFile(categoriesFilePath))
             {
                 knownCategories.Add("EOP", "Other");
@@ -187,7 +222,7 @@ namespace ITU_EOP
             {
                 knownCategories = fileOp.loadFile(categoriesFilePath);
             }
-
+            /// Pokud neexistuje soubor dnešního dne vytvoří se prázdná kolekce a začne se zaznamenávat, jinak se soubor načte do kolekce
             if (!fileOp.checkFile(DateTime.Now))
             {
                 Applications = new ObservableCollection<Application>();
@@ -206,6 +241,7 @@ namespace ITU_EOP
                 applicationTimer.Start();
             }
 
+            ///Zaregistrování poslouchání zpráv předaných z jiných ViewModelů
             Messenger.Default.Register<SimpleMessage>(this, ConsumeMessage);
             Messenger.Default.Register<DateTime>(this, "applicationToken", ChangeDay);
             Messenger.Default.Register<int>(this, setMode);
@@ -214,16 +250,28 @@ namespace ITU_EOP
         }
 
         #region MessengerMethods
+        /// <summary>
+        /// Nastavení notifikace podle tlačítka bud na povolené nebo zakázané podle parametru obj
+        /// </summary>
+        /// <param name="obj"></param>
         private void setNotification(bool obj)
         {
             notificationAllowed = obj;
         }
 
+        /// <summary>
+        /// Nastavení modu zobrazování na Den, Měsíc, Rok podle parametru type
+        /// </summary>
+        /// <param name="type"></param>
         private void setMode(int type)
         {
             mode = type;
         }
 
+        /// <summary>
+        /// Změna Dne/Měsíce/Roku a načtění odpovídajících souborů z databáze
+        /// </summary>
+        /// <param name="date"></param>
         private void ChangeDay(DateTime date)
         {
             selectedDate = date;
@@ -268,6 +316,10 @@ namespace ITU_EOP
         }
         #endregion
 
+
+        /// <summary>
+        /// Přepočítání podílů aplikací na celkovém čase
+        /// </summary>
         void recountThePercentage()
         {
             foreach (Application item in applications)
@@ -276,7 +328,9 @@ namespace ITU_EOP
             }
         }
 
-
+        /// <summary>
+        /// Nastavení časovačů
+        /// </summary>
         private void setTimers()
         {
             applicationTimer.Tick += new EventHandler(applicationTimer_Tick);
@@ -284,7 +338,7 @@ namespace ITU_EOP
 
             saveTimer.Tick += new EventHandler(saveLog);
             saveTimer.Tag = Applications;
-            saveTimer.Interval = new TimeSpan(0, 0, 5);
+            saveTimer.Interval = new TimeSpan(0, 2, 0);
             saveTimer.Start();
 
             statisticsTimer.Tick += new EventHandler(statisticsTimer_Tick);
@@ -294,6 +348,11 @@ namespace ITU_EOP
             targetsTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
+        /// <summary>
+        /// Zpoždění odeslání dat při přepnutí na Target View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void targetsTimer_Tick(object sender, EventArgs e)
         {
             Messenger.Default.Send(categories);
@@ -301,6 +360,11 @@ namespace ITU_EOP
             targetsTimer.Stop();
         }
 
+        /// <summary>
+        /// Zpoždění odeslání dat při přepnutí na Statistics View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void statisticsTimer_Tick(object sender, EventArgs e)
         {
             Messenger.Default.Send(applications);
@@ -308,11 +372,20 @@ namespace ITU_EOP
             statisticsTimer.Stop();
         }
 
+        /// <summary>
+        /// Timer event pro uložení dat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void saveLog(object sender, EventArgs e)
         {
             saveLogCommand(DateTime.Today);
         }
 
+        /// <summary>
+        /// Uložení do souboru konkrétního dne určeného parametrem _date
+        /// </summary>
+        /// <param name="_date"></param>
         private void saveLogCommand(DateTime _date)
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(Applications);
@@ -323,6 +396,10 @@ namespace ITU_EOP
             File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory() + "\\" + "categories.json"), categoriesJson);
         }
 
+        /// <summary>
+        /// Metoda pro vykonání akce při přijetí jednoduché zprávy z jiného ViewModelu
+        /// </summary>
+        /// <param name="message"></param>
         private void ConsumeMessage(SimpleMessage message)
         {
             switch (message.Type)
@@ -352,6 +429,11 @@ namespace ITU_EOP
             }
         }
 
+        /// <summary>
+        /// Jednosekundový tik aplikace, zjištuje jméno aplikace na popředí pomocí WinApi funkcí a bud přičítá do již existující aplikace nebo vytváří novou
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void applicationTimer_Tick(object sender, EventArgs e)
         {
             if (firstSend)
@@ -454,6 +536,10 @@ namespace ITU_EOP
             }
         }
 
+        /// <summary>
+        /// Zjištění jména na popředí pomocí WinApi funkcí a rozřezání jména pouze jméno programu
+        /// </summary>
+        /// <returns></returns>
         private string getWindowName()
         {
             var strTitle = string.Empty;
@@ -480,7 +566,7 @@ namespace ITU_EOP
 
 
     /// <summary>
-    /// NEAUTORSKÉ
+    /// NEAUTORSKÉ - slouží pro předání více parametrů z Command bindingu
     /// Autor: https://stackoverflow.com/a/53965139
     /// </summary>
     public class ArrayMultiValueConverter : IMultiValueConverter
