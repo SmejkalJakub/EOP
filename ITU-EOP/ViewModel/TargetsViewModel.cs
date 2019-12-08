@@ -1,4 +1,14 @@
-﻿using GalaSoft.MvvmLight;
+﻿/*
+
+ *  ITU projekt - TimeTracker 
+ *  Zpracovani dat pro cile v jednotlivych kategoriich
+ *  Autor: Adam Grunwald, xgrunw00
+
+ 
+ 
+*/
+
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;

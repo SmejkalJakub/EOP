@@ -1,4 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿/*
+ *  ITU projekt - TimeTracker 
+ *  Zpracovani dat pro vzkresleni grafu
+ *  Autor: Adam Grunwald, xgrunw00
+*/
+ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using LiveCharts;
 using LiveCharts.Configurations;
@@ -124,7 +129,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Funkce která je vyvolaná messengerem pro smazání grafů, aby nebyli překreslovány dvakrát
+        /// Funkce která je vyvolaná messengerem pro smazání grafů, aby nebyly překreslovány dvakrát
         /// </summary>
         /// <param name="message"></param>
         private void ConsumeMessage(SimpleMessage message)
