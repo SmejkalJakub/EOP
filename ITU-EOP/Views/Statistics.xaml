@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ITU_EOP.Statistics"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ITU_EOP"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid Background="Gray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.ColumnSpan="2" Fill="LightGray"/>
+
+        <TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Aplikace" VerticalAlignment="Center" Grid.Column="0" FontSize="15"/>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Kategorie" VerticalAlignment="Center" Grid.Column="1" FontSize="15"/>
+
+        <Grid Grid.Row="1" MaxWidth="600">
+            <lvc:PieChart Name="applicationsChart" Series="{Binding appsCollection}" Margin="20,20,10,20" LegendLocation="Right" MaxHeight="400" InnerRadius="0" DisableAnimations="False">
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="10" MinWidth="75"></lvc:DefaultLegend>
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" MaxWidth="600">
+            <lvc:PieChart Name="categoriesChart" Series="{Binding categoriesCollection}" Margin="10,20,20,20" MaxHeight="400" LegendLocation="Right" InnerRadius="0" DisableAnimations="False">
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="10" MinWidth="75">></lvc:DefaultLegend>
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
+        </Grid>
+
+    </Grid>
+</UserControl>

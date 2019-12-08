@@ -1,0 +1,93 @@
+﻿<Window x:Class="ITU_EOP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:HamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        mc:Ignorable="d"
+        Title="EOP" Height="660" Width="1000" MinWidth="1000" MinHeight="660" Icon="/Icons/logo.png">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-35,0,30">
+            <TextBlock x:Name="dateToday" Text="{Binding Today}" TextAlignment="Center" FontSize="24" Foreground="#FF615959" Width="120" VerticalAlignment="Center"/>
+        </StackPanel>
+        -->
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,30">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <TextBlock Name="dateToday" Text="{Binding Today}" TextAlignment="Center" FontSize="24" Background="White" Foreground="#FF615959" Width="120" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Name="todayTimeSum" Text="{Binding TodayWholeTime, StringFormat=Celkový čas: {0:hh\\:mm\\:ss}}" FontSize="24" Foreground="#FF424242"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ContentControl Grid.Row="2" Content="{Binding CurrentViewModel}" Margin="60,10,10,10"/>
+
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding StackVisibility}" Background="White" VerticalAlignment="Center" Margin="0,15,0,30">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Button x:Name="prevButton" Command="{Binding Prev}"  CommandParameter="prev" BorderBrush="Transparent" Background="Transparent" Margin="0,0,20,0" Height="50" Width="50">
+                    <StackPanel>
+                        <Image Source="/Icons/prev.png"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock Name="currentDate" Text="{Binding DateString}" TextAlignment="Center" FontSize="24" Foreground="#FF615959" Width="120" VerticalAlignment="Center"/>
+                <Button Name="nextButton" Command="{Binding Next}" CommandParameter="next" BorderBrush="Transparent" Background="Transparent" Margin="20,0,0,0" Height="50" Width="50">
+                    <StackPanel>
+                        <Image Source="/Icons/next.png"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Name="timeSum" Text="{Binding WholeTime, StringFormat=Celkový čas: {0:hh\\:mm\\:ss}}" FontSize="24" Foreground="#FF424242"/>
+            </StackPanel>
+        </StackPanel>
+
+        <HamburgerMenu:HamburgerMenu Background="LightGray" MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left" Grid.RowSpan="4">
+            <HamburgerMenu:HamburgerMenuItem Icon="/Icons/timer_icon.png" Text="Časovač" SelectionCommand="{Binding Timer}"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="/Icons/target.png" Text="Cíle" SelectionCommand="{Binding Targets}"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="/Icons/chart_icon.png" Text="Statistiky" SelectionCommand="{Binding Statistics}"/>
+        </HamburgerMenu:HamburgerMenu>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding StackVisibility}">
+            <Button Content="Dnes" Width="75" Command="{Binding switchStateCommand}" CommandParameter="Today" Margin="0,0,10,0" Height="40"/>
+            <Button Content="Den" Width="75" Command="{Binding switchStateCommand}" CommandParameter="Day" Margin="0,0,10,0" Height="40"/>
+            <Button Content="Měsíc" Width="75" Command="{Binding switchStateCommand}" CommandParameter="Month" Margin="0,0,10,0" Height="40"/>
+            <Button Content="Rok" Width="75" Command="{Binding switchStateCommand}" CommandParameter="Year" Height="40"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,25,0">
+            <Button x:Name="calendarButton" Visibility="{Binding StackVisibility}" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent" Click="calendarButton_Click">
+                <StackPanel>
+                    <Image Source="/Icons/calendar.png"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="notificationButton" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding NotificationCommand}" Width="40" Height="40" Background="Transparent">
+                <StackPanel>
+                    <Image Source="{Binding NotificationImg}"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="pauseButton" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding PauseTimer}" Width="40" Height="40"  Background="Transparent">
+                <StackPanel>
+                    <Image Source="{Binding PlayPauseImg}"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <Calendar Name="calendar" HorizontalAlignment="Right" VerticalAlignment="center" Visibility="Hidden" Grid.RowSpan="2" MouseLeave="calendar_MouseLeave" SelectedDatesChanged="calendar_SelectedDatesChanged" Margin="0,10,106,42">
+        </Calendar>
+
+    </Grid>
+
+</Window>

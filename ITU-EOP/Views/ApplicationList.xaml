@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="ITU_EOP.ApplicationList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ITU_EOP"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <local:ArrayMultiValueConverter x:Key="ArrayMultiValueConverter"/>
+
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+        <Style x:Key="RightGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+        <Style x:Key="LeftGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+        <Style x:Key="DataGridCellCenter" TargetType="DataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="DataGridCellRight" TargetType="DataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="DataGridCellVerCenter" TargetType="DataGridCell">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+
+    <DataGrid Name="applicationGrid" RowHeaderWidth="0" ItemsSource="{Binding Applications, UpdateSourceTrigger=PropertyChanged}" RowHeight="40" IsReadOnly="True" AutoGenerateColumns="False" BorderThickness="0" Background="Gray" RowBackground="#FF9E9E9E" GridLinesVisibility="None" AlternatingRowBackground="#FF898989" SelectionUnit="Cell" SelectionMode="Single">
+
+        <DataGrid.Columns>
+
+            <DataGridTextColumn Header=" Aplikace" Width="*" Binding="{Binding name}" HeaderStyle="{StaticResource LeftGridHeaderStyle}" CellStyle="{StaticResource DataGridCellVerCenter}" FontSize="13"/>
+
+            <DataGridTemplateColumn Header="Kategorie"  Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}" CellStyle="{StaticResource DataGridCellCenter}">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <Button Name="Work" Command="{Binding DataContext.setCategory,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type DataGrid}}}" Width="30" Height="30" Background="Transparent" BorderBrush="Transparent">
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource ArrayMultiValueConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="Name"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="DataContext"/>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <StackPanel>
+                                    <Image Source="{Binding workIcon}" Height="20"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Fun" Command="{Binding DataContext.setCategory,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type DataGrid}}}" Width="30" Height="30" Background="Transparent" BorderBrush="Transparent">
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource ArrayMultiValueConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="Name"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="DataContext"/>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <StackPanel>
+                                    <Image Source="{Binding funIcon}" Height="20"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Other" Command="{Binding DataContext.setCategory,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type DataGrid}}}" Width="30" Height="30" Background="Transparent" BorderBrush="Transparent">
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource ArrayMultiValueConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="Name"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=Self}" Path="DataContext"/>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <StackPanel>
+                                    <Image Source="{Binding otherIcon}" Height="20"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTextColumn Header="Podíl času (%)" Width="*" Binding="{Binding percenTimeInApp, StringFormat={}{0}%}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" CellStyle="{StaticResource DataGridCellCenter}" FontSize="13"/>
+
+            <DataGridTextColumn Header="Strávený čas" Width="*" Binding="{Binding timeInApp}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" CellStyle="{StaticResource DataGridCellCenter}" FontSize="13"/>
+
+            <DataGridTemplateColumn HeaderStyle="{StaticResource RightGridHeaderStyle}" CellStyle="{StaticResource DataGridCellRight}">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Name="DeleteButton" Command="{Binding DataContext.deleteApplication,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type DataGrid}}}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}" Background="#FF666666" VerticalAlignment="Center" Width="20" Height="20" Margin="0,0,5,0">
+                            <StackPanel>
+                                <Image Source="/Icons/deleteButton.png" Height="15"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>
