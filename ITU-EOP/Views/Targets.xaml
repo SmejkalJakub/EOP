@@ -1,4 +1,11 @@
-﻿<UserControl x:Class="ITU_EOP.Targets"
+﻿
+    <!--
+    ITU projekt - TimeTracker 
+    zobrazeni statistik
+    Autor: Adam Grunwald, xgrunw00
+    -->
+    
+    <UserControl x:Class="ITU_EOP.Targets"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
