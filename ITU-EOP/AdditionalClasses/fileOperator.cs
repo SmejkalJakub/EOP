@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * ITU projekt - TimeTracker
+ * Modul s pomocnou třidou zpracovávající soubory, která se používa pro načítání dat z databáze.
+ * Dominik Nejedlý, xnejed09
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -6,16 +12,12 @@ using System.Linq;
 
 namespace ITU_EOP
 {
-    /*************************
-    Pomocná třida zpracovávající soubory, používaná pro načítání dat z databáze
-    *************************/
-
     class FileOperator
     {
         readonly string currentDirectory = Directory.GetCurrentDirectory();
 
         /// <summary>
-        /// Načtení souboru do colekce, načítání celého souboru obsahující popis aplikací uložených z předchozích použití
+        /// Načtení souboru do colekce, načítání celého souboru obsahující popis aplikací uložených z předchozích použití.
         /// </summary>
 
         public ObservableCollection<Application> loadFile(DateTime date, ref int wholeTime)
@@ -31,7 +33,7 @@ namespace ITU_EOP
             return returningCollection;
         }
         /// <summary>
-        ///Načtení souboru ze zvolené cesty
+        ///Načtení souboru ze zvolené cesty.
         /// </summary>
 
         public Dictionary<string, string> loadFile(string path)
@@ -40,7 +42,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Zkontrolování zda soubor existuje
+        /// Zkontrolování zda soubor existuje.
         /// </summary>
         public bool checkFile(DateTime date)
         {
@@ -48,7 +50,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Zkontrolování souboru ze zvolené cesty
+        /// Zkontrolování souboru ze zvolené cesty.
         /// </summary>
         public bool checkFile(string path)
         {
@@ -56,7 +58,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Načtení celého měsíce z databáze
+        /// Načtení celého měsíce z databáze.
         /// </summary>
         public ObservableCollection<Application> loadMonth(DateTime date, ref int wholeTime)
         {
@@ -114,7 +116,7 @@ namespace ITU_EOP
         }
 
         /// <summary>
-        /// Načtení celého roku z databáze
+        /// Načtení celého roku z databáze.
         /// </summary>
         public ObservableCollection<Application> loadYear(DateTime date, ref int wholeTime)
         {
@@ -186,7 +188,7 @@ namespace ITU_EOP
 
 
         /// <summary>
-        /// Vytvoření potřebných složek
+        /// Vytvoření potřebných složek.
         /// </summary>
         public void createDirectories()
         {
