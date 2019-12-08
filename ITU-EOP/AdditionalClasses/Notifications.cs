@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+* ITU projekt - TimeTracker
+* Třída využívající Notifikací z WinForms pro zobrazení upozornění při prokrastinaci či splnění cíle
+* Jakub Smejkal, xsmejk28
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,9 +16,6 @@ using System.Windows.Forms;
 
 namespace ITU_EOP
 {
-    /// <summary>
-    /// Třída využívající Notifikací z WinForms pro zobrazení upozornění při prokrastinaci či splnění cíle
-    /// </summary>
     class Notfications
     {
         private readonly NotifyIcon _notifyIcon;

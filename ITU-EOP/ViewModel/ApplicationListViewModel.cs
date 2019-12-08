@@ -1,4 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿/*
+ * ITU projekt - TimeTracker
+ * Nejrozsáhlejší třída která řídí zobrazování hlavní části programu a to je zobrazování času, kategorie a seznamu aplikací
+ * Jakub Smejkal, xsmejk28
+ */
+
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -18,9 +24,6 @@ using System.Windows.Media.Imaging;
 
 namespace ITU_EOP
 {
-    /// <summary>
-    /// Nejrozsáhlejší třída která řídí zobrazování hlavní části programu a to je zobrazování času, kategorie a seznamu aplikací
-    /// </summary>
     public class ApplicationListViewModel : ViewModelBase, INotifyPropertyChanged
     {
 

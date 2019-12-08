@@ -1,8 +1,11 @@
-﻿namespace ITU_EOP
+﻿/*
+* ITU projekt - TimeTracker
+* Jednoduchá třída pro zasílání zpráv zkrzte Messenger díky které je možno komunikovat mezi ViewModely
+* Jakub Smejkal, xsmejk28
+*/
+
+namespace ITU_EOP
 {
-    /// <summary>
-    /// Jednoduchá třída pro zasílání zpráv zkrzte Messenger díky které je možno komunikovat mezi ViewModely
-    /// </summary>
     public class SimpleMessage
     {
         public SimpleMessage()

@@ -1,3 +1,9 @@
+/*
+ * ITU projekt - TimeTracker
+ * ViewModel pro hlavní okno aplikace sloužící jako "Obal" pro všechny ostatní viewModely
+ * Jakub Smejkal, xsmejk28
+ */
+
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;

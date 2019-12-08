@@ -6,7 +6,6 @@
  *  Autor: Adam Grunwald, xgrunw00
 
  
- 
 */
 
 using GalaSoft.MvvmLight;

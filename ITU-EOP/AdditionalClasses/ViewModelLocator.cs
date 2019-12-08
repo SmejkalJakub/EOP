@@ -18,7 +18,7 @@ using GalaSoft.MvvmLight.Ioc;
 
 /// <summary>
 /// NEAUTORSKÉ
-/// Vytvoøeno Nugget balíèkem MVVMLight
+/// Vytvoøeno NuGet balíèkem MVVMLight
 /// </summary>
 namespace ITU_EOP
 {

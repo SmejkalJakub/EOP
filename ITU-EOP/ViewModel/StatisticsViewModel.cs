@@ -20,13 +20,6 @@ using System.Threading.Tasks;
 
 namespace ITU_EOP
 {
-<<<<<<< HEAD
-    /// <summary>
-    /// ViewModel pro Statistics View využívající NuGet balíček LiveCharts https://www.nuget.org/packages/LiveCharts/
-    /// </summary>
-=======
-   
->>>>>>> 3b35d24e05e8adb0d5986382f29cc7e251755704
     public class StatisticsViewModel : ViewModelBase
     {
         /// <summary>
