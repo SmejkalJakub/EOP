@@ -338,7 +338,7 @@ namespace ITU_EOP
 
             saveTimer.Tick += new EventHandler(saveLog);
             saveTimer.Tag = Applications;
-            saveTimer.Interval = new TimeSpan(0, 2, 0);
+            saveTimer.Interval = new TimeSpan(0, 0, 5);
             saveTimer.Start();
 
             statisticsTimer.Tick += new EventHandler(statisticsTimer_Tick);

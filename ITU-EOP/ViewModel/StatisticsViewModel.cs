@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace ITU_EOP
 {
     /// <summary>
-    /// ViewModel pro Statistics View využívající Nugget balíček LiveCharts https://www.nuget.org/packages/LiveCharts/
+    /// ViewModel pro Statistics View využívající NuGet balíček LiveCharts https://www.nuget.org/packages/LiveCharts/
     /// </summary>
     public class StatisticsViewModel : ViewModelBase
     {

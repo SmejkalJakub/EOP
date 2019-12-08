@@ -6,10 +6,12 @@ using System.Linq;
 
 namespace ITU_EOP
 {
-    /*************************
-    Pomocná třida zpracovávající soubory, používaná pro načítání dat z databáze
-    *************************/
 
+
+
+    /// <summary>
+    /// Pomocná třida zpracovávající soubory, používaná pro načítání dat z databáze
+    /// </summary>
     class FileOperator
     {
         readonly string currentDirectory = Directory.GetCurrentDirectory();
